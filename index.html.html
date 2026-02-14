@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneha Maity - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #f1f5f9; line-height: 1.6; }
+        nav { position: fixed; top: 0; width: 100%; padding: 1rem 5%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #3b82f6; text-decoration: none; }
+        nav ul { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        nav a { color: #94a3b8; text-decoration: none; transition: color 0.3s; }
+        nav a:hover { color: #3b82f6; }
+        .btn-resume { padding: 0.6rem 1.5rem; background: #3b82f6; color: white; border-radius: 6px; font-weight: 600; }
+        section { padding: 5rem 5%; max-width: 1400px; margin: 0 auto; }
+        .hero { min-height: 100vh; display: flex; align-items: center; gap: 3rem; }
+        .hero-text { flex: 1; }
+        h1 { font-size: 4rem; font-weight: 800; background: linear-gradient(135deg, #f1f5f9 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; color: #94a3b8; margin: 1rem 0; }
+        .pixel-char { width: 200px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin: 3rem 0; }
+        .stat-card { background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; text-align: center; transition: all 0.3s; cursor: pointer; position: relative; }
+        .stat-card:hover { transform: translateY(-5px); border-color: #3b82f6; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); }
+        .stat-card.clickable:hover::after { content: '👆 Click me!'; position: absolute; bottom: 0.5rem; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: #3b82f6; font-weight: 600; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: #3b82f6; font-family: 'JetBrains Mono'; }
+        .stat-label { color: #94a3b8; margin-top: 0.5rem; }
+        
+        /* MODAL */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 10000; }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: #1e293b; border-radius: 12px; border: 2px solid #3b82f6; max-width: 900px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 2rem; position: relative; }
+        .close-btn { position: absolute; top: 1rem; right: 1rem; background: #ef4444; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; font-weight: bold; line-height: 1; }
+        .close-btn:hover { background: #dc2626; }
+        .modal h3 { font-size: 2rem; margin-bottom: 2rem; color: #3b82f6; }
+        .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .cert-item { background: #0f172a; padding: 1.5rem; border-radius: 8px; border: 1px solid #334155; transition: all 0.3s; }
+        .cert-item:hover { border-color: #10b981; transform: translateY(-3px); }
+        .cert-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
+        .cert-item h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .cert-org { color: #94a3b8; font-size: 0.9rem; }
+        
+        h2 { font-size: 2.5rem; margin-bottom: 3rem; }
+        .terminal { background: #1a1f2e; border-radius: 12px; border: 1px solid #334155; overflow: hidden; margin: 2rem 0; }
+        .terminal-header { background: #0d1117; padding: 0.75rem 1rem; display: flex; gap: 0.5rem; }
+        .term-btn { width: 12px; height: 12px; border-radius: 50%; }
+        .term-btn.red { background: #ff5f56; }
+        .term-btn.yellow { background: #ffbd2e; }
+        .term-btn.green { background: #27c93f; }
+        .terminal-body { padding: 1.5rem; font-family: 'JetBrains Mono'; font-size: 0.9rem; }
+        .term-line { margin-bottom: 0.5rem; }
+        .prompt { color: #10b981; }
+        .command { color: #3b82f6; }
+        .output { color: #94a3b8; margin-left: 1rem; }
+        .highlight { color: #8b5cf6; font-weight: 600; }
+        .code-demo { background: #1e293b; border-radius: 12px; border: 1px solid #334155; overflow: hidden; margin: 2rem 0; }
+        .code-header { background: rgba(59, 130, 246, 0.1); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .run-btn { padding: 0.5rem 1.5rem; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .run-btn:hover { background: #059669; }
+        .code-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 300px; }
+        .code-editor { background: #1a1f2e; padding: 1.5rem; font-family: 'JetBrains Mono'; font-size: 0.85rem; }
+        .code-output { background: #0d1117; padding: 1.5rem; border-left: 1px solid #334155; display: flex; align-items: center; justify-content: center; }
+        .result { font-size: 3rem; font-weight: 700; color: #10b981; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .skill-item { background: #1e293b; padding: 1.5rem; border-radius: 12px; border: 1px solid #334155; }
+        .skill-header { display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 600; }
+        .skill-percent { color: #3b82f6; font-family: 'JetBrains Mono'; }
+        .skill-bar { height: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 10px; overflow: hidden; }
+        .skill-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); width: 0; transition: width 1.5s ease-out; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .project-card { background: #1e293b; border-radius: 12px; border: 1px solid #334155; padding: 2rem; transition: all 0.3s; }
+        .project-card:hover { transform: translateY(-10px); border-color: #3b82f6; box-shadow: 0 20px 50px rgba(59, 130, 246, 0.3); }
+        .project-type { color: #3b82f6; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .project-card h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+        .project-card p { color: #94a3b8; margin-bottom: 1rem; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tech-tag { padding: 0.4rem 0.9rem; background: rgba(59, 130, 246, 0.1); color: #3b82f6; border-radius: 20px; font-size: 0.8rem; }
+        @media (max-width: 768px) { h1 { font-size: 2rem; } .hero { flex-direction: column; } .stats { grid-template-columns: repeat(2, 1fr); } .code-body { grid-template-columns: 1fr; } nav ul a:not(.btn-resume) { display: none; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" class="logo">Sneha Maity</a>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#" class="btn-resume">Resume</a></li>
+        </ul>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Sneha Maity</h1>
+            <p style="font-size: 1.5rem; font-weight: 600;">Software Developer & CS Student</p>
+            <p>Building scalable software solutions. Specializing in health-tech, AI/ML, and full-stack development.</p>
+        </div>
+        <svg class="pixel-char" viewBox="0 0 80 110" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="15" width="8" height="35" fill="#1a1a1a"/><rect x="62" y="15" width="8" height="35" fill="#1a1a1a"/><rect x="8" y="25" width="10" height="30" fill="#0d0d0d"/><rect x="62" y="25" width="10" height="30" fill="#0d0d0d"/><rect x="18" y="8" width="44" height="6" fill="#1a1a1a"/><rect x="14" y="14" width="52" height="8" fill="#1a1a1a"/><rect x="12" y="22" width="56" height="6" fill="#0d0d0d"/><rect x="20" y="14" width="8" height="10" fill="#1a1a1a"/><rect x="28" y="14" width="8" height="12" fill="#1a1a1a"/><rect x="36" y="14" width="8" height="10" fill="#1a1a1a"/><rect x="44" y="14" width="8" height="12" fill="#1a1a1a"/><rect x="22" y="18" width="36" height="8" fill="#c68642"/><rect x="18" y="26" width="44" height="14" fill="#c68642"/><rect x="22" y="40" width="36" height="8" fill="#c68642"/><rect x="22" y="27" width="12" height="2" fill="#333"/><rect x="22" y="36" width="12" height="2" fill="#333"/><rect x="22" y="27" width="2" height="11" fill="#333"/><rect x="32" y="27" width="2" height="11" fill="#333"/><rect x="46" y="27" width="12" height="2" fill="#333"/><rect x="46" y="36" width="12" height="2" fill="#333"/><rect x="46" y="27" width="2" height="11" fill="#333"/><rect x="56" y="27" width="2" height="11" fill="#333"/><rect x="34" y="30" width="12" height="3" fill="#333"/><rect x="24" y="29" width="4" height="4" fill="rgba(255,255,255,0.3)"/><rect x="48" y="29" width="4" height="4" fill="rgba(255,255,255,0.3)"/><rect x="26" y="31" width="4" height="4" fill="#000"/><rect x="50" y="31" width="4" height="4" fill="#000"/><rect x="24" y="26" width="8" height="2" fill="#1a1a1a"/><rect x="48" y="26" width="8" height="2" fill="#1a1a1a"/><rect x="32" y="42" width="16" height="3" fill="#8b4513"/><rect x="32" y="48" width="16" height="6" fill="#c68642"/><rect x="28" y="54" width="24" height="3" fill="#fff"/><rect x="24" y="57" width="32" height="16" fill="#fff"/><rect x="28" y="54" width="6" height="4" fill="#e8e8e8"/><rect x="46" y="54" width="6" height="4" fill="#e8e8e8"/><rect x="20" y="60" width="40" height="3" fill="#1e3a5f"/><rect x="18" y="63" width="44" height="18" fill="#2c5282"/><rect x="20" y="63" width="40" height="18" fill="#1e3a5f"/><rect x="24" y="60" width="6" height="12" fill="#1a2942"/><rect x="50" y="60" width="6" height="12" fill="#1a2942"/><rect x="12" y="63" width="8" height="20" fill="#2c5282"/><rect x="60" y="63" width="8" height="20" fill="#2c5282"/><rect x="12" y="83" width="8" height="6" fill="#c68642"/><rect x="60" y="83" width="8" height="6" fill="#c68642"/><rect x="26" y="81" width="28" height="3" fill="#1a1a2e"/><rect x="24" y="84" width="32" height="14" fill="#1a1a2e"/><rect x="26" y="84" width="28" height="14" fill="#0f0f1a"/><rect x="28" y="98" width="10" height="16" fill="#c68642"/><rect x="42" y="98" width="10" height="16" fill="#c68642"/><rect x="26" y="104" width="14" height="6" fill="#000"/><rect x="40" y="104" width="14" height="6" fill="#000"/><rect x="14" y="40" width="6" height="18" fill="#1a1a1a"/><rect x="60" y="40" width="6" height="18" fill="#1a1a1a"/><rect x="16" y="48" width="6" height="12" fill="#0d0d0d"/><rect x="58" y="48" width="6" height="12" fill="#0d0d0d"/>
+        </svg>
+    </section>
+    
+    <section id="about">
+        <h2>Quick Stats</h2>
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" data-target="7.93">0</div>
+                <div class="stat-label">CGPA</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="5">0</div>
+                <div class="stat-label">Projects</div>
+            </div>
+            <div class="stat-card clickable" onclick="openModal()">
+                <div class="stat-number" data-target="6">0</div>
+                <div class="stat-label">Certifications</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-target="2026">0</div>
+                <div class="stat-label">Graduation</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CERTIFICATION MODAL -->
+    <div class="modal" id="certModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <h3>🏆 My Certifications</h3>
+            <div class="cert-grid">
+                <div class="cert-item">
+                    <div class="cert-emoji">☁️</div>
+                    <h4>AWS Academy Machine Learning Foundations</h4>
+                    <p class="cert-org">Amazon Web Services</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-emoji">☁️</div>
+                    <h4>AWS Academy Cloud Foundations</h4>
+                    <p class="cert-org">Amazon Web Services</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-emoji">⚛️</div>
+                    <h4>Basics of Quantum Information</h4>
+                    <p class="cert-org">Certified Program</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-emoji">🤖</div>
+                    <h4>AI Tools Workshop</h4>
+                    <p class="cert-org">Professional Training</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-emoji">🔒</div>
+                    <h4>Introduction to Cybersecurity Awareness</h4>
+                    <p class="cert-org">HP Life</p>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-emoji">🐍</div>
+                    <h4>Python Essentials 1 & 2</h4>
+                    <p class="cert-org">Python Institute</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section id="skills">
+        <h2>Interactive Skills Demo</h2>
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="term-btn red"></div>
+                <div class="term-btn yellow"></div>
+                <div class="term-btn green"></div>
+            </div>
+            <div class="terminal-body">
+                <div class="term-line"><span class="prompt">sneha@dev:~$</span> <span class="command">ls skills/</span></div>
+                <div class="term-line output">Languages/ Frameworks/ Tools/</div>
+                <div class="term-line"><span class="prompt">sneha@dev:~$</span> <span class="command">cat skills/languages.txt</span></div>
+                <div class="term-line output">→ <span class="highlight">C++</span> - Data Structures & Algorithms</div>
+                <div class="term-line output">→ <span class="highlight">Java</span> - Object-Oriented Programming</div>
+                <div class="term-line output">→ <span class="highlight">Python</span> - AI/ML, Backend Development</div>
+                <div class="term-line output">→ <span class="highlight">SQL</span> - Database Management</div>
+            </div>
+        </div>
+        
+        <div class="code-demo">
+            <div class="code-header">
+                <div style="font-weight: 600;">💻 Live Code Demo - Fibonacci</div>
+                <button class="run-btn" onclick="runCode()">▶ Run Code</button>
+            </div>
+            <div class="code-body">
+                <div class="code-editor"><pre style="margin:0;color:#e8e8e8;"><span style="color:#8b5cf6;">def</span> <span style="color:#3b82f6;">fibonacci</span>(n):
+    <span style="color:#8b5cf6;">if</span> n <= <span style="color:#f59e0b;">1</span>: <span style="color:#8b5cf6;">return</span> n
+    <span style="color:#8b5cf6;">return</span> <span style="color:#3b82f6;">fibonacci</span>(n-<span style="color:#f59e0b;">1</span>) + <span style="color:#3b82f6;">fibonacci</span>(n-<span style="color:#f59e0b;">2</span>)
+
+result = <span style="color:#3b82f6;">fibonacci</span>(<span style="color:#f59e0b;">10</span>)
+<span style="color:#8b5cf6;">print</span>(<span style="color:#10b981;">f"Result: {result}"</span>)</pre></div>
+                <div class="code-output">
+                    <div class="result" id="output">Click Run ▶</div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 style="margin:2rem 0 1.5rem;font-size:1.8rem;">Proficiency Levels</h3>
+        <div class="skills-grid">
+            <div class="skill-item">
+                <div class="skill-header">
+                    <span>C++ & DSA</span>
+                    <span class="skill-percent">90%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header">
+                    <span>Python</span>
+                    <span class="skill-percent">85%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header">
+                    <span>Java & OOP</span>
+                    <span class="skill-percent">85%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-header">
+                    <span>MySQL</span>
+                    <span class="skill-percent">85%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-type">🏆 HACKATHON</div>
+                <h3>Connexus</h3>
+                <p>Smart India Hackathon project revolutionizing rural education through remote learning.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Web Dev</span>
+                    <span class="tech-tag">EdTech</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-type">🏥 HEALTHCARE</div>
+                <h3>Patient-Doctor Auth</h3>
+                <p>Secure authentication with encrypted login, OTP verification, role-based access.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">Security</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-type">🤖 AI APP</div>
+                <h3>AI PetCare Tracker</h3>
+                <p>AI-powered pet health monitoring with nutrition tracking and smart reminders.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">AI/ML</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-type">🏥 HEALTHCARE</div>
+                <h3>MediSync</h3>
+                <p>Real-time patient monitoring system with continuous vital tracking.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Real-time</span>
+                    <span class="tech-tag">Database</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-type">🌱 PUBLIC HEALTH</div>
+                <h3>HealthEx</h3>
+                <p>Public health awareness platform promoting healthier lifestyles.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Health-tech</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" style="text-align:center;">
+        <h2>Let's Connect</h2>
+        <p style="font-size:1.1rem;color:#94a3b8;margin-bottom:2rem;">Actively seeking software development internships!</p>
+        <div style="display:flex;justify-content:center;gap:2rem;margin:2rem 0;">
+            <a href="https://github.com/Blodreina912" style="color:#3b82f6;text-decoration:none;font-weight:600;">GitHub</a>
+            <a href="https://www.linkedin.com/in/snehamaity-b05174255" style="color:#3b82f6;text-decoration:none;font-weight:600;">LinkedIn</a>
+            <a href="mailto:maitysneha510@gmail.com" style="color:#3b82f6;text-decoration:none;font-weight:600;">Email</a>
+        </div>
+        <p style="color:#94a3b8;">📧 maitysneha510@gmail.com | 📱 +91 8597787193</p>
+    </section>
+    
+    <footer style="text-align:center;padding:3rem;border-top:1px solid #334155;color:#94a3b8;">
+        <p>&copy; 2026 Sneha Maity. Built with passion ⚡</p>
+    </footer>
+    
+    <script>
+        // Animate counters
+        function animateCounter(el) {
+            const target = parseFloat(el.dataset.target);
+            let current = 0;
+            const step = target / 100;
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    el.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    el.textContent = target % 1 ? current.toFixed(2) : Math.floor(current);
+                }
+            }, 20);
+        }
+        
+        setTimeout(() => {
+            document.querySelectorAll('.stat-number').forEach(animateCounter);
+            document.querySelectorAll('.skill-fill').forEach(f => {
+                f.style.width = f.dataset.width + '%';
+            });
+        }, 500);
+        
+        // Run code demo
+        function runCode() {
+            const out = document.getElementById('output');
+            out.textContent = 'Running...';
+            setTimeout(() => out.textContent = '55', 1000);
+        }
+        
+        // Modal functions
+        function openModal() {
+            document.getElementById('certModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('certModal').classList.remove('active');
+        }
+        
+        // Close on click outside
+        document.getElementById('certModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        
+        // Close on Escape
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeModal();
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+            });
+        });
+    </script>
+</body>
+</html>
