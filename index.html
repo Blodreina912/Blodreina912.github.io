@@ -27,8 +27,6 @@
         .stat-card.clickable:hover::after { content: '👆 Click me!'; position: absolute; bottom: 0.5rem; left: 50%; transform: translateX(-50%); font-size: 0.7rem; color: #3b82f6; font-weight: 600; }
         .stat-number { font-size: 2.5rem; font-weight: 700; color: #3b82f6; font-family: 'JetBrains Mono'; }
         .stat-label { color: #94a3b8; margin-top: 0.5rem; }
-        
-        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 10000; }
         .modal.active { display: flex; align-items: center; justify-content: center; }
         .modal-content { background: #1e293b; border-radius: 12px; border: 2px solid #3b82f6; max-width: 900px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 2rem; position: relative; }
@@ -41,7 +39,6 @@
         .cert-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
         .cert-item h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
         .cert-org { color: #94a3b8; font-size: 0.9rem; }
-        
         h2 { font-size: 2.5rem; margin-bottom: 3rem; }
         .terminal { background: #1a1f2e; border-radius: 12px; border: 1px solid #334155; overflow: hidden; margin: 2rem 0; }
         .terminal-header { background: #0d1117; padding: 0.75rem 1rem; display: flex; gap: 0.5rem; }
@@ -107,25 +104,24 @@
         <h2>Quick Stats</h2>
         <div class="stats">
             <div class="stat-card">
-                <div class="stat-number" data-target="7.93">0</div>
+                <div class="stat-number">7.93</div>
                 <div class="stat-label">CGPA</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" data-target="5">0</div>
+                <div class="stat-number">5</div>
                 <div class="stat-label">Projects</div>
             </div>
             <div class="stat-card clickable" onclick="openModal()">
-                <div class="stat-number" data-target="6">0</div>
+                <div class="stat-number">6</div>
                 <div class="stat-label">Certifications</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" data-target="2026">0</div>
+                <div class="stat-number">2026</div>
                 <div class="stat-label">Graduation</div>
             </div>
         </div>
     </section>
     
-    <!-- CERTIFICATION MODAL -->
     <div class="modal" id="certModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">×</button>
@@ -210,28 +206,28 @@ result = <span style="color:#3b82f6;">fibonacci</span>(<span style="color:#f59e0
                     <span>C++ & DSA</span>
                     <span class="skill-percent">90%</span>
                 </div>
-                <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+                <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
             </div>
             <div class="skill-item">
                 <div class="skill-header">
                     <span>Python</span>
                     <span class="skill-percent">85%</span>
                 </div>
-                <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+                <div class="skill-bar"><div class="skill-fill" style="width: 85%;"></div></div>
             </div>
             <div class="skill-item">
                 <div class="skill-header">
                     <span>Java & OOP</span>
                     <span class="skill-percent">85%</span>
                 </div>
-                <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+                <div class="skill-bar"><div class="skill-fill" style="width: 85%;"></div></div>
             </div>
             <div class="skill-item">
                 <div class="skill-header">
                     <span>MySQL</span>
                     <span class="skill-percent">85%</span>
                 </div>
-                <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+                <div class="skill-bar"><div class="skill-fill" style="width: 85%;"></div></div>
             </div>
         </div>
     </section>
@@ -293,46 +289,16 @@ result = <span style="color:#3b82f6;">fibonacci</span>(<span style="color:#f59e0
         <div style="display:flex;justify-content:center;gap:2rem;margin:2rem 0;">
             <a href="https://github.com/Blodreina912" style="color:#3b82f6;text-decoration:none;font-weight:600;">GitHub</a>
             <a href="https://www.linkedin.com/in/snehamaity-b05174255" style="color:#3b82f6;text-decoration:none;font-weight:600;">LinkedIn</a>
-            <a href="/cdn-cgi/l/email-protection#224f434b565b514c474a4317131262454f434b4e0c414d4f" style="color:#3b82f6;text-decoration:none;font-weight:600;">Email</a>
+            <a href="mailto:maitysneha510@gmail.com" style="color:#3b82f6;text-decoration:none;font-weight:600;">Email</a>
         </div>
-        <p style="color:#94a3b8;">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="711c10180508021f14191044404131161c10181d5f121e1c">[email&#160;protected]</a> | 📱 +91 8597787193</p>
+        <p style="color:#94a3b8;">📧 maitysneha510@gmail.com | 📱 +91 8597787193</p>
     </section>
     
     <footer style="text-align:center;padding:3rem;border-top:1px solid #334155;color:#94a3b8;">
         <p>&copy; 2026 Sneha Maity. Built with passion ⚡</p>
     </footer>
     
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Animate counters
-        function animateCounter(el) {
-            const target = parseFloat(el.dataset.target);
-            let current = 0;
-            const step = target / 100;
-            const timer = setInterval(() => {
-                current += step;
-                if (current >= target) {
-                    el.textContent = target;
-                    clearInterval(timer);
-                } else {
-                    el.textContent = target % 1 ? current.toFixed(2) : Math.floor(current);
-                }
-            }, 20);
-        }
-        
-        setTimeout(() => {
-            document.querySelectorAll('.stat-number').forEach(animateCounter);
-            document.querySelectorAll('.skill-fill').forEach(f => {
-                f.style.width = f.dataset.width + '%';
-            });
-        }, 500);
-        
-        // Run code demo
-        function runCode() {
-            const out = document.getElementById('output');
-            out.textContent = 'Running...';
-            setTimeout(() => out.textContent = '55', 1000);
-        }
-        
+    <script>
         // Modal functions
         function openModal() {
             document.getElementById('certModal').classList.add('active');
@@ -342,15 +308,29 @@ result = <span style="color:#3b82f6;">fibonacci</span>(<span style="color:#f59e0
             document.getElementById('certModal').classList.remove('active');
         }
         
-        // Close on click outside
         document.getElementById('certModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
         
-        // Close on Escape
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeModal();
         });
         
+        // Run code demo
+        function runCode() {
+            const out = document.getElementById('output');
+            out.textContent = 'Running...';
+            setTimeout(() => out.textContent = '55', 1000);
+        }
+        
         // Smooth scroll
-        document.querySelec
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({behavior:'smooth'});
+            });
+        });
+    </script>
+</body>
+</html>
